@@ -1,0 +1,26 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin: 20px;
+    background-color: antiquewhite;
+}
+
+h1 {
+    color: black;
+}
+
+.parrafo{
+    text-align: center;
+    color: brown;
+}
+
+#resultado {
+    margin-top: 20px;
+    font-size: 18px;
+}
+
+#alturas{
+    border-bottom: tomato;
+    color: black;
+    text-overflow:ellipsis;
+}

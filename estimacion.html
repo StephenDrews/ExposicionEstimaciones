@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estimacion por Intervalos, GRUPO 5</title>
+    <link rel="stylesheet" href="estimacion.css"></link>
+    <script src="estimacion.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+    <h1>Estimación por Intervalos para Altura Promedio de Estudiantes</h1>
+    <p class="parrafo">
+        si te preguntan cuánto tiempo te toma llegar a la escuela, en lugar de decir "15 minutos",
+        podrías decir "Entre 10 y 20 minutos". Este rango es tu estimación por intervalos
+        la altura promedio de los estudiantes, en lugar de dar un solo número, dices algo como "La
+        altura promedio de los estudiantes es entre 150 cm y 170 cm", lo que significa que estás
+        bastante seguro de que la verdadera altura promedio se encuentra dentro de ese rango.
+    </p>
+    <div>
+        <label for="alturas">Alturas de los estudiantes (separadas por comas):</label>
+        <input type="text" id="alturas">
+        <button onclick="calcularEstimacion()">Calcular Estimación</button>
+    </div>
+    <div id="resultado"></div>
+
+
+
+
+    <!--Grafica visual de la libreria npm chart-->
+    <canvas id="myChart" width="400" height="400"></canvas>
+    <script>
+        const alturasAlumnos = [160, 155, 170, 165, 175, 150, 180, 145, 185, 140];
+        
+        // Calcular los intervalos de confianza
+    const intervalosConfianza = calcularEstimacionIntervaloAltura(alturasAlumnos);
+
+const ctx = document.getElementById('myChart').getContext('2d');
+const myChart = new Chart(ctx, {
+    type: 'scatter',
+    data: {
+        datasets: [
+            {
+                label: 'Altura de Estudiantes',
+                data: alturasAlumnos.map((altura, index) => ({
+                    x: index + 1,
+                    y: altura
+                })),
+                backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 1
+            },
+            {
+                label: 'Intervalo de Confianza',
+                data: [
+                    { x: 1, y: intervalosConfianza.minimosCuadrados[0] },
+                    { x: alturasAlumnos.length, y: intervalosConfianza.minimosCuadrados[0] },
+                    { x: alturasAlumnos.length, y: intervalosConfianza.minimosCuadrados[1] },
+                    { x: 1, y: intervalosConfianza.minimosCuadrados[1] }
+                ],
+                backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                borderColor: 'rgba(255, 99, 132, 1)',
+                borderWidth: 1,
+                type: 'line'
+            }
+        ]
+    },
+    options: {
+        scales: {
+            x: {
+                type: 'linear',
+                title: {
+                    display: true,
+                    text: 'Índice de Estudiante'
+                }
+            },
+            y: {
+                type: 'linear',
+                title: {
+                    display: true,
+                    text: 'Altura (cm)'
+                }
+            }
+        }
+    }
+});
+</script>
+
+    
+</body>
+
+</html>
